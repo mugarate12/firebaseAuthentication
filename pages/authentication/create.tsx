@@ -11,6 +11,7 @@ import {
 import styles from './Create.module.css'
 
 import firebase from './../../config/firebase'
+import axios from './../../config/axios'
 
 export default function CreateUserPage() {
   const [email, setEmail] = useState<string>('')
@@ -20,26 +21,17 @@ export default function CreateUserPage() {
     const fieldsNotEmpty = !!email && !!password
     
     if (fieldsNotEmpty) {
-
-      await fetch('http://localhost:3000/api/users/create', {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify({ 
-          email,
-          password
-        })
+      await axios.post('/api/users/create', {
+        email,
+        password
       })
-        .then(async (response) => {
-          const data = await response.json()
-
-          console.log(data)
+        .then(response => {
+          console.log(response.data)
           alert('usuário criado com sucesso!')
         })
         .catch(error => {
-          console.log(error)
-          alert('error')
+          console.log(error.response.data)
+          alert('Erro! Verifique suas informações!')
         })
     } else {
       alert('preencha os campos!')
