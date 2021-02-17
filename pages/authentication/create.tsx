@@ -20,15 +20,26 @@ export default function CreateUserPage() {
     const fieldsNotEmpty = !!email && !!password
     
     if (fieldsNotEmpty) {
-      await firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then(user => {
-          console.log(user)
-          alert('Conta criada com sucesso!')
+
+      await fetch('http://localhost:3000/api/users/create', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify({ 
+          email,
+          password
+        })
+      })
+        .then(async (response) => {
+          const data = await response.json()
+
+          console.log(data)
+          alert('usuário criado com sucesso!')
         })
         .catch(error => {
-          console.log(error.code)
-          console.log(error.message)
-          alert('erro!')
+          console.log(error)
+          alert('error')
         })
     } else {
       alert('preencha os campos!')
