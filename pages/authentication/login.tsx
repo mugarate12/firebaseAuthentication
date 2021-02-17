@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import Head from 'next/head'
-import { useRouter } from 'next/router'
 
 import {
   Layout
@@ -9,36 +8,35 @@ import {
   GenericForm
 } from './../../containers'
 
-import styles from './Create.module.css'
+import styles from './Login.module.css'
 
 import firebase, { Firebase } from './../../config/firebase'
 import axios from './../../config/axios'
 
-export default function CreateUserPage() {
-  const router = useRouter()
-
+export default function Login() {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
 
-  async function createUser() {
+  async function loginUser() {
     const fieldsNotEmpty = !!email && !!password
     
     if (fieldsNotEmpty) {
-      await axios.post('/api/users/create', {
+      await axios.post('/api/users/login', {
         email,
         password
       })
         .then(response => {
           console.log(response.data)
-          alert('usuário criado com sucesso!')
-          router.push('/authentication/login')
+          
+          alert('Usuário logado com sucesso!')
         })
         .catch(error => {
           console.log(error.response.data)
-          alert('Erro! Verifique suas informações!')
+
+          alert('error')
         })
     } else {
-      alert('preencha os campos!')
+      alert('preencha todos os campos!')
     }
   }
 
@@ -52,7 +50,6 @@ export default function CreateUserPage() {
         const user = result.user
 
         alert('Logado com sucesso!')
-        router.push('/authentication/login')
       })
       .catch(error => {
         // Handle Errors here.
@@ -70,7 +67,7 @@ export default function CreateUserPage() {
   return (
     <Layout>
       <Head>
-        <title>Criar usuário</title>
+        <title>Logar</title>
       </Head>
 
       <div className={styles.container}>
@@ -89,8 +86,8 @@ export default function CreateUserPage() {
           ]}
           arrayOfButtonsInformations={[
             {
-              textButton: 'Criar usuário',
-              onClick: () => createUser()
+              textButton: 'Entrar',
+              onClick: () => loginUser()
             },
             {
               textButton: 'Entrar com google',
@@ -100,5 +97,5 @@ export default function CreateUserPage() {
         />
       </div>
     </Layout>
-  )
+  );
 }

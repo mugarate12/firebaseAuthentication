@@ -45,6 +45,7 @@ export default function GenericForm({ arrayOfStates, arrayOfButtonsInformations 
       return (
         <button
           key={String(index)}
+          className={styles.button}
           onClick={(e) => !!buttonInformation.onClick ? executeFunction(e, buttonInformation.onClick) : {}}
         >
           {buttonInformation.textButton}
@@ -54,11 +55,9 @@ export default function GenericForm({ arrayOfStates, arrayOfButtonsInformations 
   }
   
   return (
-    <>
-      <form className={styles.container}>
-        {renderInputs()}
-        {renderButtons()}
-      </form>
-    </>
+    <form className={styles.container}>
+      {renderInputs()}
+      {renderButtons()}
+    </form>
   )
 }
