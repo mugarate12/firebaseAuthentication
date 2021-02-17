@@ -10,7 +10,7 @@ import {
 
 import styles from './Create.module.css'
 
-import firebase from './../../config/firebase'
+import firebase, { Firebase } from './../../config/firebase'
 import axios from './../../config/axios'
 
 export default function CreateUserPage() {
@@ -38,6 +38,30 @@ export default function CreateUserPage() {
     }
   }
 
+  async function LoginWithGoogle() {
+    const provider = new Firebase.auth.GoogleAuthProvider()
+
+    firebase.auth()
+      .signInWithPopup(provider)
+      .then(result => {
+        const credential = result.credential
+        const user = result.user
+
+        alert('Logado com sucesso!')
+      })
+      .catch(error => {
+        // Handle Errors here.
+        const errorCode = error.code
+        const errorMessage = error.message
+        // The email of the user's account used.
+        const email = error.email
+        // The firebase.auth.AuthCredential type that was used.
+        const credential = error.credential
+
+        alert('Erro ao Logar com Google')
+      })
+  }
+
   return (
     <Layout>
       <Head>
@@ -58,8 +82,16 @@ export default function CreateUserPage() {
               type: 'password'
             }
           ]}
-          textButton='Criar usuário'
-          onClick={() => createUser()}
+          arrayOfButtonsInformations={[
+            {
+              textButton: 'Criar usuário',
+              onClick: () => createUser()
+            },
+            {
+              textButton: 'Entrar com google',
+              onClick: () => LoginWithGoogle()
+            }
+          ]}
         />
       </div>
     </Layout>

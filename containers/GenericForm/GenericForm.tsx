@@ -8,11 +8,13 @@ interface GenericFormInterface {
     setState: Dispatch<SetStateAction<any>>,
     type: 'text' | 'password' | 'date' | 'number'
   }>,
-  textButton: string
-  onClick?: Function,
+  arrayOfButtonsInformations: Array<{
+    textButton: string,
+    onClick?: Function
+  }>
 }
 
-export default function GenericForm({ arrayOfStates, onClick, textButton }: GenericFormInterface) {
+export default function GenericForm({ arrayOfStates, arrayOfButtonsInformations }: GenericFormInterface) {
   function renderInputs() {
     return arrayOfStates.map((stateInformation, index) => {
       return (
@@ -32,22 +34,30 @@ export default function GenericForm({ arrayOfStates, onClick, textButton }: Gene
     })
   }
 
-  function executeFunction(e: any) {
+  function executeFunction(e: any, buttonFunction: Function) {
     e.preventDefault()
 
-    onClick()
+    buttonFunction()
+  }
+
+  function renderButtons() {
+    return arrayOfButtonsInformations.map((buttonInformation, index) => {
+      return (
+        <button
+          key={String(index)}
+          onClick={(e) => !!buttonInformation.onClick ? executeFunction(e, buttonInformation.onClick) : {}}
+        >
+          {buttonInformation.textButton}
+        </button>
+      )
+    })
   }
   
   return (
     <>
       <form className={styles.container}>
         {renderInputs()}
-
-        <button
-        onClick={(e) => !!onClick ? executeFunction(e) : {}}
-        >
-          {textButton}
-        </button>
+        {renderButtons()}
       </form>
     </>
   )
