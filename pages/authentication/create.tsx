@@ -30,6 +30,9 @@ export default function CreateUserPage() {
       })
         .then(response => {
           console.log(response.data)
+
+          sessionStorage.setItem('userUID', response.data.userUid)
+
           alert('usuário criado com sucesso!')
           router.push('/authentication/login')
         })
@@ -51,8 +54,11 @@ export default function CreateUserPage() {
         const credential = result.credential
         const user = result.user
 
+        const uid = user.uid
+        sessionStorage.setItem('userUID', uid)
+
         alert('Logado com sucesso!')
-        router.push('/authentication/login')
+        router.push('/perfil/define')
       })
       .catch(error => {
         // Handle Errors here.

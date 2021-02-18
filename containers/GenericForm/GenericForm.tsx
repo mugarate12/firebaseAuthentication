@@ -3,12 +3,12 @@ import { SetStateAction, Dispatch } from 'react'
 import styles from './GenericForm.module.css'
 
 interface GenericFormInterface {
-  arrayOfStates: Array<{
+  arrayOfStates?: Array<{
     state: any,
     setState: Dispatch<SetStateAction<any>>,
     type: 'text' | 'password' | 'date' | 'number'
   }>,
-  arrayOfButtonsInformations: Array<{
+  arrayOfButtonsInformations?: Array<{
     textButton: string,
     onClick?: Function
   }>
@@ -16,7 +16,7 @@ interface GenericFormInterface {
 
 export default function GenericForm({ arrayOfStates, arrayOfButtonsInformations }: GenericFormInterface) {
   function renderInputs() {
-    return arrayOfStates.map((stateInformation, index) => {
+    return arrayOfStates?.map((stateInformation, index) => {
       return (
         <input
           key={String(index)}
@@ -41,7 +41,7 @@ export default function GenericForm({ arrayOfStates, arrayOfButtonsInformations 
   }
 
   function renderButtons() {
-    return arrayOfButtonsInformations.map((buttonInformation, index) => {
+    return arrayOfButtonsInformations?.map((buttonInformation, index) => {
       return (
         <button
           key={String(index)}

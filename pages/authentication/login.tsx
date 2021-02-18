@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 import Head from 'next/head'
 
 import {
@@ -10,10 +11,12 @@ import {
 
 import styles from './Login.module.css'
 
-import firebase, { Firebase } from './../../config/firebase'
+import firebase, { Firebase, database } from './../../config/firebase'
 import axios from './../../config/axios'
 
 export default function Login() {
+  const router = useRouter()
+
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
 
@@ -28,7 +31,9 @@ export default function Login() {
         .then(response => {
           console.log(response.data)
           
+          sessionStorage.setItem('userUID', response.data.userUid)
           alert('Usuário logado com sucesso!')
+          router.push('/perfil/define')
         })
         .catch(error => {
           console.log(error.response.data)
@@ -45,15 +50,17 @@ export default function Login() {
 
     firebase.auth()
       .signInWithPopup(provider)
-      .then(result => {
+      .then(async (result) => {
         const credential = result.credential
         const user = result.user
         console.log('credencial', credential)
         console.log('user', user)
 
         const uid = user.uid
+        sessionStorage.setItem('userUID', uid)
 
-        alert('Logado com sucesso!')
+        router.push('/perfil/define')
+        // alert('Logado com sucesso!')
       })
       .catch(error => {
         // Handle Errors here.

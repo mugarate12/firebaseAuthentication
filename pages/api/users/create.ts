@@ -14,7 +14,8 @@ export default async function CreateUser(req: NextApiRequest, res: NextApiRespon
   return await firebase.auth().createUserWithEmailAndPassword(email, password)
     .then(user => {
       return res.status(201).json({
-        sucess: 'User created sucessful'
+        sucess: 'User created sucessful',
+        userUid: user.user.uid
       })
     })
     .catch(error => {
