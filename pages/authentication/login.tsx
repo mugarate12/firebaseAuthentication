@@ -11,7 +11,7 @@ import {
 
 import styles from './Login.module.css'
 
-import firebase, { Firebase, database } from './../../config/firebase'
+import firebase, { Firebase } from './../../config/firebase'
 import axios from './../../config/axios'
 
 export default function Login() {
