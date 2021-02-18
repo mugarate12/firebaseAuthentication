@@ -13,7 +13,8 @@ export default async function LoginUser(req: NextApiRequest, res: NextApiRespons
   return await firebase.auth().signInWithEmailAndPassword(email, password)
     .then(user => {
       return res.status(200).json({
-        sucess: 'Usuário logado com sucesso!'
+        sucess: 'Usuário logado com sucesso!',
+        userUid: user.user.uid
       })
     })
     .catch(error => {

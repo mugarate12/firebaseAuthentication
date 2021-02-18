@@ -48,6 +48,10 @@ export default function Login() {
       .then(result => {
         const credential = result.credential
         const user = result.user
+        console.log('credencial', credential)
+        console.log('user', user)
+
+        const uid = user.uid
 
         alert('Logado com sucesso!')
       })
