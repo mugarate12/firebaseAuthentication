@@ -36,7 +36,6 @@ export default function DefinePerfil() {
           console.log(error.response.data)
         })
     }
-    
   }
 
   return (

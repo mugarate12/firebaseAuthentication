@@ -30,14 +30,19 @@ export default function Dashboard({ UID, type }: DashboardInterface) {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const uid = context.query.id
-    const snapshot = await database.collection('perfil').doc(String(uid))
-      .get()
-    const data = snapshot.data()
+
+    // o axios buga por não conseguir usar uma porta diferente a qual a aplicação está usando
+    // já o fetch não consegue passar o parametro "/api/perfil/:userUID" sendo necessário
+    // a redundância de inserir a frente o query param
+    const snapshot = await fetch(`http://localhost:3000/api/perfil/${uid}?userUID=${uid}`, {
+      method: 'GET'
+    })
+    const data = await snapshot.json()
     
     return {
       props: {
         UID: uid,
-        type: data.tipo
+        type: data.type
       }
   }
 }
