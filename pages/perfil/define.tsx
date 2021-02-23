@@ -11,7 +11,7 @@ import {
 
 import styles from './Define.module.css'
 
-import axios from './../../config/axios'
+import { createPerfilType } from './../../firebase/perfil'
 
 export default function DefinePerfil() {
   const router = useRouter()
@@ -23,17 +23,14 @@ export default function DefinePerfil() {
     const typeFieldNotEmpty = !!typePerfil
 
     if (typeFieldNotEmpty) {
-      await axios.post('/api/perfil/define', {
-        userUid: uid,
-        type: typePerfil
-      })
+      await createPerfilType(uid, typePerfil)
         .then(response => {
           console.log(response)
 
           router.push(`/discover/${uid}`)
         })
         .catch(error => {
-          console.log(error.response.data)
+          console.log(error)
         })
     }
   }

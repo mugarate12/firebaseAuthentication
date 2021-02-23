@@ -11,8 +11,8 @@ import {
 
 import styles from './Create.module.css'
 
-import firebase, { Firebase } from './../../config/firebase'
-import axios from './../../config/axios'
+import { firebaseModule, auth } from './../../config/firebase'
+import { createUserWithEmailAndPassword } from './../../firebase/users'
 
 export default function CreateUserPage() {
   const router = useRouter()
@@ -24,21 +24,16 @@ export default function CreateUserPage() {
     const fieldsNotEmpty = !!email && !!password
     
     if (fieldsNotEmpty) {
-      await axios.post('/api/users/create', {
-        email,
-        password
-      })
+      await createUserWithEmailAndPassword(email, password)
         .then(response => {
-          console.log(response.data)
+          // console.log(response.data)
+          // console.log(response.data.response['userUid'])
+          sessionStorage.setItem('userUID', response.data.response['userUid'])
 
-          sessionStorage.setItem('userUID', response.data.userUid)
-
-          alert('usuário criado com sucesso!')
           router.push('/authentication/login')
         })
         .catch(error => {
-          console.log(error.response.data)
-          alert('Erro! Verifique suas informações!')
+          alert('Erro ao cadastrar usuário')
         })
     } else {
       alert('preencha os campos!')
@@ -46,9 +41,9 @@ export default function CreateUserPage() {
   }
 
   async function LoginWithGoogle() {
-    const provider = new Firebase.auth.GoogleAuthProvider()
+    const provider = new firebaseModule.auth.GoogleAuthProvider()
 
-    firebase.auth()
+    auth
       .signInWithPopup(provider)
       .then(result => {
         const credential = result.credential

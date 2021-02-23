@@ -11,8 +11,8 @@ import {
 
 import styles from './Login.module.css'
 
-import firebase, { Firebase } from './../../config/firebase'
-import axios from './../../config/axios'
+import { firebaseModule, auth } from './../../config/firebase'
+import { signInWithEmailAndPassword } from './../../firebase/users'
 
 export default function Login() {
   const router = useRouter()
@@ -24,21 +24,12 @@ export default function Login() {
     const fieldsNotEmpty = !!email && !!password
     
     if (fieldsNotEmpty) {
-      await axios.post('/api/users/login', {
-        email,
-        password
-      })
+      await signInWithEmailAndPassword(email, password)
         .then(response => {
-          console.log(response.data)
-          
-          sessionStorage.setItem('userUID', response.data.userUid)
-          alert('Usuário logado com sucesso!')
-          router.push('/perfil/define')
-        })
-        .catch(error => {
-          console.log(error.response.data)
+          sessionStorage.setItem('userUID', response.data.response['userUid'])
 
-          alert('error')
+          alert('user logged sucessful!')
+          router.push('/perfil/define')
         })
     } else {
       alert('preencha todos os campos!')
@@ -46,9 +37,9 @@ export default function Login() {
   }
 
   async function LoginWithGoogle() {
-    const provider = new Firebase.auth.GoogleAuthProvider()
+    const provider = new firebaseModule.auth.GoogleAuthProvider()
 
-    firebase.auth()
+    auth
       .signInWithPopup(provider)
       .then(async (result) => {
         const credential = result.credential

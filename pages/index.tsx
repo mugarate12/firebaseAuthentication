@@ -18,7 +18,7 @@ export default function Home() {
 
       <div className={styles.container}>
         <button
-          onClick={() => router.push('./authentication/create')}
+          onClick={() => router.push('/authentication/create')}
         >Criar usuário</button>
       </div>
     </Layout>

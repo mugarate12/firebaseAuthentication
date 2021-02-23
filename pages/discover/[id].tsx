@@ -6,7 +6,7 @@ import { Layout } from './../../components'
 
 import styles from './Discover.module.css'
 
-import { database } from './../../config/firebase'
+import { getPerfilType } from './../../firebase/perfil'
 
 interface DashboardInterface {
   UID: string,
@@ -30,19 +30,22 @@ export default function Dashboard({ UID, type }: DashboardInterface) {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const uid = context.query.id
+    let data
 
-    // o axios buga por não conseguir usar uma porta diferente a qual a aplicação está usando
-    // já o fetch não consegue passar o parametro "/api/perfil/:userUID" sendo necessário
-    // a redundância de inserir a frente o query param
-    const snapshot = await fetch(`http://localhost:3000/api/perfil/${uid}?userUID=${uid}`, {
-      method: 'GET'
-    })
-    const data = await snapshot.json()
+    await getPerfilType(String(uid))
+      .then(response => {
+        data = response.data
+      })
+      .catch(error => {
+        console.log(error)
+      })
+
+    console.log('data', data.response.type)
     
     return {
       props: {
         UID: uid,
-        type: data.type
+        type: data.response.type
       }
   }
 }
