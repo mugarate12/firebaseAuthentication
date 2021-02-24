@@ -1,4 +1,4 @@
-import { handleResponse } from './../../config/firebaseResponse'
+import { handleResponse, FirebaseFunctionError } from './../../config/firebaseResponse'
 import { database } from './../../config/firebase'
 
 export async function createPerfilType(
@@ -12,23 +12,14 @@ export async function createPerfilType(
       })
       .then(result => {
         return handleResponse({
-          type: 'sucess',
           message: 'perfil type created sucessful'
         })
       })
       .catch(error => {
-        return handleResponse({
-          type: 'error',
-          message: error.message,
-          errorCode: error.code
-        })
+        throw new FirebaseFunctionError(error.code, error.message)
       })
   } catch (error) {
-    return handleResponse({
-      type: 'error',
-      message: error.message,
-      errorCode: error.code
-    })
+    throw new FirebaseFunctionError(error.code, error.message)
   }
 }
 
@@ -42,7 +33,6 @@ export async function getPerfilType(
         const data = snapshot.data()
 
         return handleResponse({
-          type: 'sucess',
           message: 'get perfil type sucessful',
           data: {
             type: data.type
@@ -50,17 +40,9 @@ export async function getPerfilType(
         })
       })
       .catch(error => {
-        return handleResponse({
-          type: 'error',
-          message: error.message,
-          errorCode: error.code
-        })
+        throw new FirebaseFunctionError(error.code, error.message)
       })
   } catch (error) {
-    return handleResponse({
-      type: 'error',
-      message: error.message,
-      errorCode: error.code
-    })
+    throw new FirebaseFunctionError(error.code, error.message)
   }
 }

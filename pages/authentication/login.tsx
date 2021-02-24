@@ -11,8 +11,7 @@ import {
 
 import styles from './Login.module.css'
 
-import { firebaseModule, auth } from './../../config/firebase'
-import { signInWithEmailAndPassword } from './../../firebase/users'
+import { signInWithEmailAndPassword, signInWithGoogle } from './../../firebase/users'
 
 export default function Login() {
   const router = useRouter()
@@ -37,32 +36,20 @@ export default function Login() {
   }
 
   async function LoginWithGoogle() {
-    const provider = new firebaseModule.auth.GoogleAuthProvider()
+    await signInWithGoogle()
+      .then(response => {
+        console.log(response)
+        const userUID = response.data.response['userUid']
 
-    auth
-      .signInWithPopup(provider)
-      .then(async (result) => {
-        const credential = result.credential
-        const user = result.user
-        console.log('credencial', credential)
-        console.log('user', user)
+        sessionStorage.setItem('userUID', userUID)
 
-        const uid = user.uid
-        sessionStorage.setItem('userUID', uid)
-
+        alert('suer logged sucessful')
         router.push('/perfil/define')
-        // alert('Logado com sucesso!')
       })
       .catch(error => {
-        // Handle Errors here.
-        const errorCode = error.code
-        const errorMessage = error.message
-        // The email of the user's account used.
-        const email = error.email
-        // The firebase.auth.AuthCredential type that was used.
-        const credential = error.credential
+        console.log(error)
 
-        alert('Erro ao Logar com Google')
+        
       })
   }
 

@@ -1,5 +1,5 @@
-import { handleResponse } from './../../config/firebaseResponse'
-import { auth } from './../../config/firebase'
+import { handleResponse, FirebaseFunctionError } from './../../config/firebaseResponse'
+import { auth, firebaseModule } from './../../config/firebase'
 
 export async function createUserWithEmailAndPassword(
   email: string,
@@ -9,7 +9,6 @@ export async function createUserWithEmailAndPassword(
     return await auth.createUserWithEmailAndPassword(email, password)
       .then(user => {
         return handleResponse({
-          type: 'sucess',
           message: 'User created sucessful',
           data: {
             userUid: user.user.uid
@@ -17,18 +16,10 @@ export async function createUserWithEmailAndPassword(
         })
       })
       .catch(error => {
-        return handleResponse({
-          type: 'error',
-          message: error.message,
-          errorCode: error.code
-        })
+        throw new FirebaseFunctionError(error.code, error.message)
       })
   } catch (error) {
-    return handleResponse({
-      type: 'error',
-      message: error.message,
-      errorCode: error.code
-    })
+    throw new FirebaseFunctionError(error.code, error.message)
   }
 }
 
@@ -40,7 +31,6 @@ export async function signInWithEmailAndPassword(
     return await auth.signInWithEmailAndPassword(email, password)
       .then(user => {
         return handleResponse({
-          type: 'sucess',
           message: 'user logged!',
           data: {
             userUid: user.user.uid
@@ -48,17 +38,39 @@ export async function signInWithEmailAndPassword(
         })
       })
       .catch(error => {
-        return handleResponse({
-          type: 'error',
-          message: error.message,
-          errorCode: error.code
-        })
+        throw new FirebaseFunctionError(error.code, error.message)
       })
   } catch (error) {
-    return handleResponse({
-      type: 'error',
-      message: error.message,
-      errorCode: error.code
-    })
+    throw new FirebaseFunctionError(error.code, error.message)
   }
+}
+
+export async function signInWithGoogle() {
+  const provider = new firebaseModule.auth.GoogleAuthProvider()
+
+  return await auth
+    .signInWithPopup(provider)
+    .then((result) => {
+      const credential = result.credential
+      const user = result.user
+      const uid = user.uid
+
+      return handleResponse({
+        message: 'user logged!',
+        data: {
+          userUid: uid
+        }
+      })
+    })
+    .catch(error => {
+      // Handle Errors here.
+      const errorCode = error.code
+      const errorMessage = error.message
+      // The email of the user's account used.
+      const email = error.email
+      // The firebase.auth.AuthCredential type that was used.
+      const credential = error.credential
+
+      throw new FirebaseFunctionError(errorCode, errorMessage)
+    })
 }

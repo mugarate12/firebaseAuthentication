@@ -1,29 +1,30 @@
-interface handleResponseInterface {
-  type: 'sucess' | 'error',
+interface HandleResponseInterface {
   message: string,
-  data?: Object,
-  errorCode?: string
+  data?: Object
+}
+
+export class FirebaseFunctionError extends Error {
+  public name: string;
+  
+  constructor(name:string, description: string) {
+    super(description)
+
+    this.name = name
+
+    Error.captureStackTrace(this)
+  }
 }
 
 export function handleResponse({
-  type,
   message,
-  data,
-  errorCode
-}: handleResponseInterface) {
-  if (type === 'sucess') {
-    return  {
-      data: {
-        sucess: message,
-        response: data
-      }
-    }
-  } else {
-    return  {
-      data: {
-        error: errorCode,
-        message: message
-      }
+  data
+}: HandleResponseInterface) {
+  return  {
+    data: {
+      sucess: message,
+      response: data
     }
   }
 }
+
+

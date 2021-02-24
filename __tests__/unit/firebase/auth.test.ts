@@ -31,10 +31,11 @@ describe('Firebase', () => {
     })
 
     test('failure to create user with email and password by user email already exists and get response object', async () => {
-      const createUserRequest = await createUserWithEmailAndPassword(user.email, user.password)
-
-      expect(createUserRequest.data.error).toBeDefined()
-      expect(createUserRequest.data.message).toBeDefined()
+      try {
+        const createUserRequest = await createUserWithEmailAndPassword(user.email, user.password)
+      } catch (error) {
+        expect(error.message).toBeDefined()
+      }
     })
 
     test('sign in user with email and password and get response object', async () => {
@@ -47,10 +48,11 @@ describe('Firebase', () => {
     test('failure sign in user with email and password and get response object', async () => {
       const invalidPassword = 'badPassword'
       
-      const signInRequest = await signInWithEmailAndPassword(user.email, invalidPassword)
-
-      expect(signInRequest.data.error).toBeDefined()
-      expect(signInRequest.data.message).toBeDefined()
+      try{
+        const signInRequest = await signInWithEmailAndPassword(user.email, invalidPassword)
+      } catch (error) {
+        expect(error.message).toBeDefined()
+      }
     })
 
     test('sign in user google login social', async () => {
