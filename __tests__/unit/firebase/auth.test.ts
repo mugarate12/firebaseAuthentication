@@ -3,7 +3,6 @@ import {
   signInWithEmailAndPassword
 } from './../../../firebase/users'
 import { auth, firebaseModule } from './../../../config/firebase'
-import axios from 'axios'
 
 describe('Firebase', () => {
   describe('Auth ', () => {
@@ -11,16 +10,6 @@ describe('Firebase', () => {
       email: 'meumail@mail.com',
       password: 'minhasenha123'
     }
-
-    // async function clearAuthentication(projectID: string) {
-    //   await axios.delete(`http://localhost:9099/emulator/v1/projects/${projectID}/accounts`)
-    // }
-
-    beforeAll(async () => {
-      const projectID =  'fir-authenticationstudy'
-
-      // await clearAuthentication(projectID)
-    })
 
     test('create user with email and password and get response object', async () => {
       const createUserRequest = await createUserWithEmailAndPassword(user.email, user.password)
