@@ -74,3 +74,39 @@ export async function signInWithGoogle() {
       throw new FirebaseFunctionError(errorCode, errorMessage)
     })
 }
+
+export async function signInWithFacebook() {
+  const provider = new firebaseModule.auth.FacebookAuthProvider()
+
+  return await auth
+    .signInWithPopup(provider)
+    .then(result => {
+      /** @type {firebase.auth.OAuthCredential} */
+      const credential = result.credential
+
+      // The signed-in user info.
+      const user = result.user
+      const uid = user.uid
+
+      // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+      // const accessToken = credential.accessToken
+
+      return handleResponse({
+        message: 'user logged!',
+        data: {
+          userUid: uid
+        }
+      })
+    })
+    .catch(error => {
+      // Handle Errors here.
+      const errorCode = error.code
+      const errorMessage = error.message
+      // The email of the user's account used.
+      const email = error.email
+      // The firebase.auth.AuthCredential type that was used.
+      const credential = error.credential
+
+      throw new FirebaseFunctionError(errorCode, errorMessage)
+    })
+}

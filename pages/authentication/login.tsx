@@ -11,7 +11,11 @@ import {
 
 import styles from './Login.module.css'
 
-import { signInWithEmailAndPassword, signInWithGoogle } from './../../firebase/users'
+import {
+  signInWithEmailAndPassword,
+  signInWithGoogle,
+  signInWithFacebook
+} from './../../firebase/users'
 
 export default function Login() {
   const router = useRouter()
@@ -47,9 +51,26 @@ export default function Login() {
         router.push('/perfil/define')
       })
       .catch(error => {
-        console.log(error)
+        console.error(error)
 
-        
+        alert('erro!')
+      })
+  }
+
+  async function loginWithFacebook() {
+    await signInWithFacebook()
+      .then(response => {
+        const userUID = response.data.response['userUid']
+
+        sessionStorage.setItem('userUID', userUID)
+
+        alert('suer logged sucessful')
+        router.push('/perfil/define')
+      })
+      .catch(error => {
+        console.error(error)
+
+        alert(error.message)
       })
   }
 
@@ -81,6 +102,10 @@ export default function Login() {
             {
               textButton: 'Entrar com google',
               onClick: () => LoginWithGoogle()
+            },
+            {
+              textButton: 'Entrar com facebook',
+              onClick: () => loginWithFacebook()
             }
           ]}
         />

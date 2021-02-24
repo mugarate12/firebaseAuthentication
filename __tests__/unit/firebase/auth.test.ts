@@ -12,15 +12,14 @@ describe('Firebase', () => {
       password: 'minhasenha123'
     }
 
-    async function clearAuthentication(projectID: string) {
-      await axios.delete(`http://localhost:9099/emulator/v1/projects/${projectID}/accounts`)
-      
-    }
+    // async function clearAuthentication(projectID: string) {
+    //   await axios.delete(`http://localhost:9099/emulator/v1/projects/${projectID}/accounts`)
+    // }
 
     beforeAll(async () => {
       const projectID =  'fir-authenticationstudy'
 
-      await clearAuthentication(projectID)
+      // await clearAuthentication(projectID)
     })
 
     test('create user with email and password and get response object', async () => {
@@ -58,6 +57,14 @@ describe('Firebase', () => {
     test('sign in user google login social', async () => {
       const SocialLoginRequest = await auth.signInWithCredential(firebaseModule.auth.GoogleAuthProvider.credential(
         '{"sub": "abc123", "email": "foo@example.com", "email_verified": true}'
+      ))
+
+      expect(SocialLoginRequest.user.email).toBeDefined()
+    })
+
+    test('sign in user facebook login social', async () => {
+      const SocialLoginRequest = await auth.signInWithCredential(firebaseModule.auth.FacebookAuthProvider.credential(
+        '{"sub": "abc1234", "email": "fooo@example.com", "email_verified": true}'
       ))
 
       expect(SocialLoginRequest.user.email).toBeDefined()

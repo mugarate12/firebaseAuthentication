@@ -21,19 +21,19 @@ describe('Firebase', () => {
       userUid = createUserRequest.data.response['userUid']
     }
 
-    async function clearAuthentication(projectID: string) {
-      await axios.delete(`http://localhost:9099/emulator/v1/projects/${projectID}/accounts`)
-    }
+    // async function clearAuthentication(projectID: string) {
+    //   await axios.delete(`http://localhost:9099/emulator/v1/projects/${projectID}/accounts`)
+    // }
 
-    async function clearFirestore(projectID: string) {
-      await axios.delete(`http://localhost:8080/emulator/v1/projects/${projectID}/databases/(default)/documents`)
-    }
+    // async function clearFirestore(projectID: string) {
+    //   await axios.delete(`http://localhost:8080/emulator/v1/projects/${projectID}/databases/(default)/documents`)
+    // }
 
     beforeAll(async () => {
       const projectID =  'fir-authenticationstudy'
 
-      await clearAuthentication(projectID)
-      await clearFirestore(projectID)
+      // await clearAuthentication(projectID)
+      // await clearFirestore(projectID)
       await createUser()
     })
 
