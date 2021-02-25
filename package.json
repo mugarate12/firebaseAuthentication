@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "emulator": "cd ./functions&&npm run build&&cd ./..&&firebase emulators:start",
+    "emulator": "run-script-os",
+    "emulator:win32:linux": "cd ./functions&&npm run build&&cd ./..&&firebase emulators:start",
+    "emulator:darwin": "ls ./functions&&npm run build&&ls ./..&&firebase emulators:start",
     "test": "run-script-os",
     "test:win32": "SET ISTEST=true&&jest",
     "test:darwin:linux": "export ISTEST=true&&jest"
