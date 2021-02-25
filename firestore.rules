@@ -4,10 +4,19 @@ service cloud.firestore {
   	function AuthorizatedUser() {
     	return request.auth != null && exists(/databases/$(database)/documents/users/$(request.auth.uid))
     }
+
+    function ProducerUser() {
+    	return get(/databases/$(database)/documents/Type/$(request.auth.uid)).perfil == 'producer'
+    }
   
   	match /perfil/{perfil}{
     	allow read: if AuthorizatedUser();
       allow write: if AuthorizatedUser();
+    }
+
+    match /Producer/{producer} {
+    	allow read: if ProducerUser()
+      allow write: if ProducerUser()
     }
   
     match /{document=**} {

@@ -21,8 +21,6 @@ describe('Firebase', () => {
     }
 
     beforeAll(async () => {
-      const projectID =  'fir-authenticationstudy'
-
       await createUser()
     })
 

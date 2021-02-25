@@ -24,6 +24,7 @@ if (!firebase.apps.length) {
   if (isTestAmbient) {
     database.useEmulator('localhost', 8080)
     auth.useEmulator('http://localhost:9099')
+    firebase.functions().useEmulator('localhost', 5001)
   }
 } else {
   firebaseInstance = firebase.app()
