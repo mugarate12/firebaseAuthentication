@@ -16,11 +16,6 @@ describe('Firebase', () => {
     }
     let userListenerUid: string
     let userProducerUid: string
-    const userData = {
-      name: 'profile',
-      contact: 'XX-XXXXXXXXX',
-      username: 'profile_username'
-    }
 
     async function createUser(email: string, password: string, isProducer: boolean) {
       const createUserRequest = await createUserWithEmailAndPassword(email, password)
@@ -42,9 +37,9 @@ describe('Firebase', () => {
 
     beforeAll(async () => {
       await createUser(userListener.email, userListener.password, false)
-      await createUser(userProducer.email, userProducer.password, true)
-      
       await createNonProducerType()
+
+      await createUser(userProducer.email, userProducer.password, true)
       await createProducerType()
     })
 
@@ -58,7 +53,6 @@ describe('Firebase', () => {
       try {
         const CreateProducerRequest = await createProducer(userListenerUid)
       } catch (error) {
-        console.log(error.message)
         expect(error.message).toBeDefined()
       }
     })

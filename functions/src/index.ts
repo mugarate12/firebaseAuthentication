@@ -20,3 +20,12 @@ exports.makeUpperCase = functions.firestore.document('perfil/{documentID}')
 
     return snap.ref.set({type: uppercase}, {merge: true})
   })
+
+exports.createProfileDefaultFields = functions.firestore.document('/Profile/{documentID}')
+  .onCreate((snap, context) => {
+    const defaultInformations = {
+      artisticName: 'your name'
+    }
+
+    return snap.ref.set({...defaultInformations}, { merge: true })
+  })

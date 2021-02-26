@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "rules": "firebase deploy --only firestore:rules",
     "emulator": "run-script-os",
     "emulator:win32:linux": "cd ./functions&&npm run build&&cd ./..&&firebase emulators:start",
     "emulator:darwin": "ls ./functions&&npm run build&&ls ./..&&firebase emulators:start",

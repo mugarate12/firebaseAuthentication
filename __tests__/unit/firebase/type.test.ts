@@ -1,5 +1,6 @@
 import {
-  createUserWithEmailAndPassword
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword
 } from './../../../firebase/users'
 import { createType, getUserType } from './../../../firebase/type'
 
@@ -34,6 +35,17 @@ describe('Firebase', () => {
 
       expect(PerfilTypeRequest.data.sucess).toBe('get user type sucessful')
       expect(PerfilTypeRequest.data.response['type']).toBeDefined()
+    })
+
+    test('failure to define type of user by invalid user for firebase.rules and receive error', async () => {
+      const invalidUserUid = 'daaoihdoajdaqonqoeqeq'
+      const type = 'producer'
+
+      try {
+        const failureDefinePerfilRequest = await createType(invalidUserUid, type)
+      } catch (error) {
+        expect(error.message).toBeDefined()
+      }
     })
   })
 })
