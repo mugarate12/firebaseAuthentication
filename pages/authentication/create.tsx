@@ -48,7 +48,7 @@ export default function CreateUserPage() {
         sessionStorage.setItem('userUID', userUID)
 
         alert('suer logged sucessful')
-        router.push('/perfil/define')
+        router.push('/type/define')
       })
       .catch(error => {
         console.log(error)

@@ -20,3 +20,23 @@ export async function createProducer(
     throw new FirebaseFunctionError(error.code, error.message)
   }
 }
+
+export async function getProducer(
+  userUid: string
+) {
+  try {
+    return await database.collection(COLLECTION_NAME).doc(userUid)
+      .get()
+      .then(snapshot => {
+        const data = snapshot.data()
+        console.log('data', data)
+
+        return handleResponse({
+          message: 'get producer user informations sucessful',
+          data
+        })
+      })
+  } catch (error) {
+    throw new FirebaseFunctionError(error.code, error.message)
+  }
+}

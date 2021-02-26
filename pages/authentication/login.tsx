@@ -32,7 +32,7 @@ export default function Login() {
           sessionStorage.setItem('userUID', response.data.response['userUid'])
 
           alert('user logged sucessful!')
-          router.push('/perfil/define')
+          router.push('/type/define')
         })
     } else {
       alert('preencha todos os campos!')
@@ -48,7 +48,7 @@ export default function Login() {
         sessionStorage.setItem('userUID', userUID)
 
         alert('suer logged sucessful')
-        router.push('/perfil/define')
+        router.push('/type/define')
       })
       .catch(error => {
         console.error(error)

@@ -6,7 +6,7 @@ import { Layout } from './../../components'
 
 import styles from './Discover.module.css'
 
-import { getPerfilType } from './../../firebase/perfil'
+import { getUserType } from './../../firebase/type'
 
 interface DashboardInterface {
   UID: string,
@@ -30,22 +30,20 @@ export default function Dashboard({ UID, type }: DashboardInterface) {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const uid = context.query.id
-    let data
+    let type: string
 
-    await getPerfilType(String(uid))
+    await getUserType(String(uid))
       .then(response => {
-        data = response.data
+        type = response.data.response['type']
       })
       .catch(error => {
         console.log(error)
       })
-
-    console.log('data', data.response.type)
     
     return {
       props: {
         UID: uid,
-        type: data.response.type
+        type
       }
   }
 }

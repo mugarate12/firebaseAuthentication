@@ -6,6 +6,7 @@ interface GenericFormInterface {
   arrayOfStates?: Array<{
     state: any,
     setState: Dispatch<SetStateAction<any>>,
+    placeholder?: string,
     type: 'text' | 'password' | 'date' | 'number'
   }>,
   arrayOfButtonsInformations?: Array<{
@@ -23,6 +24,7 @@ export default function GenericForm({ arrayOfStates, arrayOfButtonsInformations 
           className={styles.input}
           type={stateInformation.type}
           value={stateInformation.state}
+          placeholder={stateInformation.placeholder}
           onChange={(e) => {
               stateInformation.setState(
                 stateInformation.type === 'number' ? Number(e.target.value) : String(e.target.value)
