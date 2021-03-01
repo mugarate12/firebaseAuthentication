@@ -1,10 +1,5 @@
-import {
-  createUserWithEmailAndPassword
-} from './../../../firebase/users'
-import {
-  createProfile,
-  getUserProfile
-} from './../../../firebase/profile'
+import Users from './../../../firebase/users'
+import Profiles from './../../../firebase/profiles'
 
 describe('Firebase', () => {
   describe('Profile', () => {
@@ -20,7 +15,9 @@ describe('Firebase', () => {
     }
 
     async function createUser() {
-      const createUserRequest = await createUserWithEmailAndPassword(user.email, user.password)
+      const users = new Users()
+
+      const createUserRequest = await users.createUserWithEmailAndPassword(user.email, user.password)
 
       userUid = createUserRequest.data.response['userUid']
     }
@@ -30,13 +27,17 @@ describe('Firebase', () => {
     })
     
     test('create profile user with userUID and pseudo informations and receive sucess object data', async () => {
-      const CreateProfileRequest = await createProfile(userUid, userData.name, userData.contact, userData.username)
+      const profiles = new Profiles()
+
+      const CreateProfileRequest = await profiles.create(userUid, userData.name, userData.contact, userData.username)
 
       expect(CreateProfileRequest.data.sucess).toBe('Profile created sucessful')
     })
 
     test('get user profile with userUID and receive sucessful object response', async () => {
-      const getProfileRequest = await getUserProfile(userUid)
+      const profiles = new Profiles()
+
+      const getProfileRequest = await profiles.get(userUid)
 
       expect(getProfileRequest.data.sucess).toBe('get user profile sucessful')
       expect(getProfileRequest.data.response['name']).toBe(userData.name)

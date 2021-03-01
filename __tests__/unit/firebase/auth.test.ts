@@ -1,8 +1,5 @@
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword
-} from './../../../firebase/users'
 import { auth, firebaseModule } from './../../../config/firebase'
+import Users from './../../../firebase/users'
 
 describe('Firebase', () => {
   describe('Auth ', () => {
@@ -12,32 +9,39 @@ describe('Firebase', () => {
     }
 
     test('create user with email and password and get response object', async () => {
-      const createUserRequest = await createUserWithEmailAndPassword(user.email, user.password)
+      const users = new Users()
+
+      const createUserRequest = await users.createUserWithEmailAndPassword(user.email, user.password)
 
       expect(createUserRequest.data.sucess).toBe('User created sucessful')
       expect(createUserRequest.data.response['userUid']).toBeDefined()
     })
 
     test('failure to create user with email and password by user email already exists and get response object', async () => {
+      const users = new Users()
+      
       try {
-        const createUserRequest = await createUserWithEmailAndPassword(user.email, user.password)
+        const createUserRequest = await users.createUserWithEmailAndPassword(user.email, user.password)
       } catch (error) {
         expect(error.message).toBeDefined()
       }
     })
 
     test('sign in user with email and password and get response object', async () => {
-      const signInRequest = await signInWithEmailAndPassword(user.email, user.password)
+      const users = new Users()
+      
+      const signInRequest = await users.signInWithEmailAndPassword(user.email, user.password)
 
       expect(signInRequest.data.sucess).toBe('user logged!')
       expect(signInRequest.data.response['userUid']).toBeDefined()
     })
 
     test('failure sign in user with email and password and get response object', async () => {
+      const users = new Users()
       const invalidPassword = 'badPassword'
       
       try{
-        const signInRequest = await signInWithEmailAndPassword(user.email, invalidPassword)
+        const signInRequest = await users.signInWithEmailAndPassword(user.email, invalidPassword)
       } catch (error) {
         expect(error.message).toBeDefined()
       }

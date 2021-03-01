@@ -1,8 +1,6 @@
-import {
-  createUserWithEmailAndPassword
-} from './../../../firebase/users'
-import { createType } from './../../../firebase/type'
-import { createProducer } from './../../../firebase/producer'
+import Users from './../../../firebase/users'
+import Types from './../../../firebase/types'
+import Producers from './../../../firebase/producers'
 
 describe('Firebase', () => {
   describe('Producer', () => {
@@ -18,7 +16,9 @@ describe('Firebase', () => {
     let userProducerUid: string
 
     async function createUser(email: string, password: string, isProducer: boolean) {
-      const createUserRequest = await createUserWithEmailAndPassword(email, password)
+      const users = new Users()
+
+      const createUserRequest = await users.createUserWithEmailAndPassword(email, password)
 
       if (isProducer) {
         userProducerUid = createUserRequest.data.response['userUid']
@@ -28,11 +28,15 @@ describe('Firebase', () => {
     }
 
     async function createNonProducerType() {
-      await createType(userListenerUid, 'listener')
+      const types = new Types()
+
+      await types.create(userListenerUid, 'listener')
     }
 
     async function createProducerType() {
-      await createType(userProducerUid, 'producer')
+      const types = new Types()
+
+      await types.create(userProducerUid, 'producer')
     }
 
     beforeAll(async () => {
@@ -44,14 +48,18 @@ describe('Firebase', () => {
     })
 
     test('sucessful create information on Producer collection to valid user', async () => {
-      const CreateProducerRequest = await createProducer(userProducerUid)
+      const producers = new Producers()
+
+      const CreateProducerRequest = await producers.create(userProducerUid)
 
       expect(CreateProducerRequest.data.sucess).toBe('producer data created sucessful')
     })
 
     test('failure create information on Producer collection to valid user', async () => {
+      const producers = new Producers()
+
       try {
-        const CreateProducerRequest = await createProducer(userListenerUid)
+        const CreateProducerRequest = await producers.create(userListenerUid)
       } catch (error) {
         expect(error.message).toBeDefined()
       }
