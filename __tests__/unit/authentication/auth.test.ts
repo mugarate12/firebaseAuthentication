@@ -2,7 +2,7 @@ import { auth, firebaseModule } from './../../../config/firebase'
 import Users from './../../../firebase/users'
 
 describe('Firebase', () => {
-  describe('Auth ', () => {
+  describe('Authentication', () => {
     const user = {
       email: 'meumail@mail.com',
       password: 'minhasenha123'

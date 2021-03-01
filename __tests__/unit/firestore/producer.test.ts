@@ -3,7 +3,7 @@ import Types from './../../../firebase/types'
 import Producers from './../../../firebase/producers'
 
 describe('Firebase', () => {
-  describe('Producer', () => {
+  describe('Firestore - Producers', () => {
     const userListener = {
       email: 'ListenerEmail@mail.com',
       password: 'minhasenha123'

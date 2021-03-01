@@ -2,7 +2,7 @@ import Users from './../../../firebase/users'
 import Profiles from './../../../firebase/profiles'
 
 describe('Firebase', () => {
-  describe('Profile', () => {
+  describe('Firestore - Profiles', () => {
     const user = {
       email: 'profileEmail@mail.com',
       password: 'minhasenha123'
