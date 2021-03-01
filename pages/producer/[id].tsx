@@ -26,7 +26,7 @@ export default function ProducerPage({ uid, example }: ProducerInterface) {
         <title>Página do produtor</title>
       </Head>
 
-      <div>
+      <div className={styles.container}>
         <h5 className={styles.h5}>usuario de id: {uid}</h5>
         <h5 className={styles.h5}>informação de produtor: {example}</h5>
       </div>

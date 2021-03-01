@@ -65,7 +65,7 @@ export default function Login() {
         sessionStorage.setItem('userUID', userUID)
 
         alert('suer logged sucessful')
-        router.push('/perfil/define')
+        router.push('/type/define')
       })
       .catch(error => {
         console.error(error)
