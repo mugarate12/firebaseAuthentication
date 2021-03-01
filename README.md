@@ -31,7 +31,14 @@ you can run tests with jest with this command:
   npm run test
 ```
 
-and you can open Emulator Ui to observe results of tests in controled and non production ambient in [http://localhost:4000](http://localhost:4000)
+You can open Emulator Ui to observe results of tests in controled and non production ambient in [http://localhost:4000](http://localhost:4000)
+
+And you can change firebase.rules to apply new rules to firestore. If you make this, your changes only reflect in firebase emulator.
+If you can apply this rules in production, run this command:
+
+```bash
+  npm run rules
+```
 
 ## Learn More
 
