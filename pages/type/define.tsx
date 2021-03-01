@@ -11,12 +11,14 @@ import {
 
 import styles from './Define.module.css'
 
-import { createType } from './../../firebase/type'
-import { createProfile } from './../../firebase/profile'
-import { createProducer } from './../../firebase/producer'
-import { user } from 'firebase-functions/lib/providers/auth'
+import Types from './../../firebase/types'
+import Profiles from './../../firebase/profiles'
+import Producers from './../../firebase/producers'
 
 export default function DefineType() {
+  const types = new Types()
+  const profiles = new Profiles()
+  const producers = new Producers()
   const router = useRouter()
 
   const [typePerfil, setTypePerfil] = useState<string>('listener')
@@ -29,19 +31,24 @@ export default function DefineType() {
     const fieldsNotEmpty = !!typePerfil && !!name && !!contact && !!username
 
     if (fieldsNotEmpty) {
-      await createType(userUid, typePerfil)
+      await types.create(userUid, typePerfil)
+        .then(result => result)
         .then(async (result) => {
-          await createProfile(userUid, name, contact, username)
-            .then(async (result) => {
-              await createProducer(userUid)
-                .then(result => {
-                  if (typePerfil == 'listener') {
-                    router.push(`/discover/${userUid}`)
-                  } else {
-                    router.push(`/producer/${userUid}`)
-                  }
-                })
-            })
+          return await profiles.create(userUid, name, contact, username)
+        })
+        .then(async (result) => {
+          if (typePerfil == 'producer') {
+            return await producers.create(userUid)
+          } else {
+            return {}
+          }
+        })
+        .then(result => {
+          if (typePerfil == 'listener') {
+            router.push(`/discover/${userUid}`)
+          } else {
+            router.push(`/producer/${userUid}`)
+          }
         })
         .catch(error => {
           alert(error.message)

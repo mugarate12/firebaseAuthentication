@@ -11,13 +11,10 @@ import {
 
 import styles from './Login.module.css'
 
-import {
-  signInWithEmailAndPassword,
-  signInWithGoogle,
-  signInWithFacebook
-} from './../../firebase/users'
+import Users from './../../firebase/users'
 
 export default function Login() {
+  const users = new Users()
   const router = useRouter()
 
   const [email, setEmail] = useState<string>('')
@@ -27,7 +24,7 @@ export default function Login() {
     const fieldsNotEmpty = !!email && !!password
     
     if (fieldsNotEmpty) {
-      await signInWithEmailAndPassword(email, password)
+      await users.signInWithEmailAndPassword(email, password)
         .then(response => {
           sessionStorage.setItem('userUID', response.data.response['userUid'])
 
@@ -40,7 +37,7 @@ export default function Login() {
   }
 
   async function LoginWithGoogle() {
-    await signInWithGoogle()
+    await users.signInWithGoogle()
       .then(response => {
         console.log(response)
         const userUID = response.data.response['userUid']
@@ -58,7 +55,7 @@ export default function Login() {
   }
 
   async function loginWithFacebook() {
-    await signInWithFacebook()
+    await users.signInWithFacebook()
       .then(response => {
         const userUID = response.data.response['userUid']
 

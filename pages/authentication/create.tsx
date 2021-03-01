@@ -11,9 +11,10 @@ import {
 
 import styles from './Create.module.css'
 
-import { createUserWithEmailAndPassword, signInWithGoogle } from './../../firebase/users'
+import Users from './../../firebase/users'
 
 export default function CreateUserPage() {
+  const users = new Users()
   const router = useRouter()
 
   const [email, setEmail] = useState<string>('')
@@ -23,7 +24,7 @@ export default function CreateUserPage() {
     const fieldsNotEmpty = !!email && !!password
     
     if (fieldsNotEmpty) {
-      await createUserWithEmailAndPassword(email, password)
+      await users.createUserWithEmailAndPassword(email, password)
         .then(response => {
           // console.log(response.data)
           // console.log(response.data.response['userUid'])
@@ -40,7 +41,7 @@ export default function CreateUserPage() {
   }
 
   async function LoginWithGoogle() {
-    await signInWithGoogle()
+    await users.signInWithGoogle()
       .then(response => {
         console.log(response)
         const userUID = response.data.response['userUid']

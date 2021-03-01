@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 
-import { getProducer } from './../../firebase/producer'
+import Producers from './../../firebase/producers'
 
 import {
   Layout
@@ -35,10 +35,12 @@ export default function ProducerPage({ uid, example }: ProducerInterface) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const producers = new Producers()
+  
   const uid = context.query.id
   let example:string
 
-  await getProducer(String(uid))
+  await producers.get(String(uid))
     .then(response => {
       console.log(response.data)
       example = response.data.response['example']
