@@ -18,6 +18,21 @@ You can start editing the page by modifying `pages/index.js`. The page auto-upda
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
+## Tests
+
+First, run this command to transpile firebase cloud functions and run emulator accordingly your operational system:
+
+```bash
+  npm run emulator
+```
+
+you can run tests with jest with this command:
+```bash
+  npm run test
+```
+
+and you can open Emulator Ui to observe results of tests in controled and non production ambient in [http://localhost:4000](http://localhost:4000)
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
