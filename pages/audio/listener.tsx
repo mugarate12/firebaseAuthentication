@@ -1,8 +1,6 @@
 import { useState, ChangeEvent } from 'react'
 
-import {
-  storage
-} from './../../config/firebase'
+import Musics from './../../firebase/storage/musics'
 
 import {
   Player
@@ -16,6 +14,8 @@ interface PlaylistInterface {
 }
 
 export default function Listener() {
+  const musics = new Musics()
+
   const [MusicFile, setMusicFile] = useState<File>(null)
   const [Playlist, setPlaylist] = useState<Array<PlaylistInterface>>([])
   const [playerActualMusic, setPlayerActualMusic] = useState<string>('')
@@ -26,11 +26,9 @@ export default function Listener() {
     setMusicFile(file)
   }
 
-  function sendSong() {
-    const filenameRef = storage.child(`/musics/${MusicFile.name}`)
-
+  async function sendSong() {
     if (!!MusicFile) {
-      filenameRef.put(MusicFile)
+      await musics.upload(MusicFile.name, MusicFile)
         .then(snapshot => {
           alert('música enviada')
         })
@@ -38,20 +36,16 @@ export default function Listener() {
   }
 
   async function listMusics() {
-    const listRef = storage.child('/musics')
-
-    await listRef.listAll()
+    await musics.index()
       .then(response => {
         let playlistArray: Array<PlaylistInterface> = []
-        response.items.forEach(music => {
-          console.log(music.fullPath)
+
+        response.data.response['items'].forEach(music => {
           playlistArray.push({
             musicName: music.name,
             storageReference: music.fullPath
           })
         })
-
-        console.log(playlistArray)
 
         setPlaylist(playlistArray)
       })

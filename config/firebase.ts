@@ -22,6 +22,7 @@ if (!firebase.apps.length) {
   auth = firebase.auth()
   storage = firebase.storage().ref()
 
+
   const isTestAmbient = ISTEST === 'true'
   if (isTestAmbient) {
     database.useEmulator('localhost', 8080)
@@ -32,7 +33,6 @@ if (!firebase.apps.length) {
   firebaseInstance = firebase.app()
   database = firebase.firestore()
   auth = firebase.auth()
-  storage = firebase.storage().ref()
 }
 
 export {

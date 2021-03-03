@@ -1,8 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 
-import {
-  storage
-} from './../../config/firebase'
+import Musics from './../../firebase/storage/musics'
 
 import styles from './Player.module.css'
 
@@ -11,6 +9,8 @@ interface PlayerInterface {
 }
 
 export default function Player({ urlData }: PlayerInterface) {
+  const musics = new Musics()
+  
   const playerRef = useRef<HTMLAudioElement>(null)
   const [progressPercent, setProgressPercent] = useState<number>(0)
 
@@ -19,18 +19,14 @@ export default function Player({ urlData }: PlayerInterface) {
   }, [urlData])
 
   async function getOnStorage() {
-    await storage.child(urlData)
-      .getDownloadURL()
-      .then(data => {
-        console.log(data)
-        // console.log(typeof data)
-        // console.log(data)
-        let audioElement = document.getElementById('audio')
-        audioElement['src'] = data
-      })
-      .catch(error => {
-        console.log(error)
-      })
+    if (!!urlData) {
+      await musics.get(urlData)
+        .then(response => {
+          let audioElement = document.getElementById('audio')
+  
+          audioElement['src'] = response.data.response['music']
+        })
+    }
   }
 
   function handleTimeUpdate() {
