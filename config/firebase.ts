@@ -14,11 +14,13 @@ var firebaseConfig = {
 let firebaseInstance: firebase.app.App
 let database: firebase.firestore.Firestore
 let auth: firebase.auth.Auth
+let storage: firebase.storage.Reference
 
 if (!firebase.apps.length) {
   firebaseInstance = firebase.initializeApp(firebaseConfig)
   database = firebase.firestore()
   auth = firebase.auth()
+  storage = firebase.storage().ref()
 
   const isTestAmbient = ISTEST === 'true'
   if (isTestAmbient) {
@@ -30,11 +32,13 @@ if (!firebase.apps.length) {
   firebaseInstance = firebase.app()
   database = firebase.firestore()
   auth = firebase.auth()
+  storage = firebase.storage().ref()
 }
 
 export {
   firebase as firebaseModule,
   firebaseInstance,
   database,
-  auth
+  auth,
+  storage
 }

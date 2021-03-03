@@ -1,0 +1,20 @@
+.container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  height: 60px;
+  width: 100%;
+
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  justify-content: center;
+}
+
+.btnContainer {
+  width: 160px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
