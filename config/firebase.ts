@@ -1,4 +1,5 @@
 import firebase from 'firebase'
+import 'firebase/storage'
 
 const ISTEST = process.env.ISTEST
 
@@ -20,8 +21,7 @@ if (!firebase.apps.length) {
   firebaseInstance = firebase.initializeApp(firebaseConfig)
   database = firebase.firestore()
   auth = firebase.auth()
-  storage = firebase.storage().ref()
-
+  storage = firebaseInstance.storage().ref()
 
   const isTestAmbient = ISTEST === 'true'
   if (isTestAmbient) {
