@@ -8,6 +8,10 @@ import {
 
 import styles from './Listener.module.css'
 
+import api from './../../config/axios'
+
+import { database, storage } from './../../config/firebase'
+
 interface PlaylistInterface {
   musicName: string,
   storageReference: string
@@ -54,6 +58,39 @@ export default function Listener() {
       })
   }
 
+  async function getMusic() {
+    const data = new FormData()
+    data.append('file', MusicFile)
+
+    await api.post('/api/music/upload', data)
+      .then(response => console.log(response))
+      .catch(error => console.error(error))
+  }
+
+  async function ListMusics() {
+    await database.collection('Musics')
+      .get()
+      .then(response => {
+        let playlistArray: Array<PlaylistInterface> = []
+        
+        response.forEach(doc => {
+          console.log(doc.data())
+          const data = doc.data()
+
+          playlistArray.push({
+            musicName: data.filename,
+            storageReference: data.path
+          })
+
+        })
+
+        setPlaylist(playlistArray)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+
   function renderMusics() {
     return Playlist.map((music, index) => {
       return (
@@ -84,6 +121,20 @@ export default function Listener() {
       >
         List All Music
       </button>
+      
+      <button
+        onClick={() => getMusic()}
+      >
+        send to google cloud storage
+      </button>
+
+      <button
+        onClick={() => ListMusics()}
+      >
+        get musics referente in firestore
+      </button>
+
+
 
       <p>Musics:</p>
 

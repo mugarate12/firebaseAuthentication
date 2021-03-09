@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "authenticationstudy-305213",
+  "private_key_id": "a0ca37e7dc082f634c638f3cb9804e3152454f27",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCf3k+YI4cXMjko\n1U/+gViiiVhMMhrdtsTA9L07F8kQZjbQCyrnujJypfE73FpJc5V+ri64ET0grwAe\nEu/IFB6Mkbm4hHm97h7RVZYcl4Ce9lDsCtc2M5NAV/zA1PjB5NR63Ew81EOmvsO0\ncIdm2lD3m+chvVOgXE+oEKJ8+5TQW40aRpZFCbmdVbZSyG12rF2IT3hH8unsHSi1\ne5UJFAcvw+LPbqYDEDDNZy7yo3qz3KaVBkki2mBmn45557nC7Ec3sLAcjbmDdAJc\nZn43fE4CWvqPLKvNrgy5rUkFnONmCRaub7jwKm9t36Cw+pwqK9AtFN04UerdMz49\nLz124IlBAgMBAAECggEALj/CuAlDKh9B8QGxCDhEO5VPQY/XPOAEkKvc2K0bYk6n\nuc0ZRvuTX56JKN+pEQnKrGDYrDB0hjGKb6jbzH6hjdoUqABPNfae3MGNUU01DQfG\nRlsmgowuI9Wwjdqu8mzwWXDE724a+jDC7j8FtOggt1lXZufeOwypkL3rPAwOM65r\nHfdoz94Xsx1R2B4spKRCDk0E20zJ2F5WJSgBebqYDDSNUHvD1V3nY3t43HWdm5DA\ntUuHz8z+cSrDDlaKnObSHHKWN6D6vQWsq/DrZuTyQ2h75bJJY34YYLFF3HP1h+7g\nki/aYeXOzabW8cAib/d4jNm9Ka++Xz5NevlFE9q13wKBgQDdeu7OBPr28XCdrjga\nAgT/6gYwd4aNt4jd4+V6PDmL7haOgmT5CPXgawTTFiRb3I734fiySE22ud1AVSEi\nz8mZwwfSKl+GiKxrH402kKxvPY30CzsxnfQxMXxqeoZyN4eDLX+CJ6TyWZSPhVEG\nJrsQFG9S+802AAFnZ/7XgZz/pwKBgQC4yRCuZWE4FgtV9xIBxKu0Phm1jtHQ1LBl\nv9zBKuyXXxPMm3/isCBW4yVGmkRsog7whDyfqNs0Dzda6KzJfzsvMoBrCYDZen5w\nRJyHFPsMh9PAlyegtkIPBQ9GQmt5X1NX++LVBaUAKWi+g5Uq8AE/LVlI3X78x0Hw\nF5c+8OYM1wKBgQCIEGwBOWIMr4tl85AXukHkDpu6ztNk4Oo+lzF1hOY9pwlIh6cM\nr4qOUnDmVWYE4V0bwEGPFYhYx5q7WRFAV7McuYpmfQ2ukuyJ6xpP+VVWCdTZpsS4\n2LcaObKbn6ZVKPQhjKQXC8/z60CvY1HBm620VTmHG5aYpCw4oNUZBFG1ZQKBgQCX\nNFgFDIoH9enityCx97e07pfk++/uXQvWxq+iFTiyCKfP5nI4EXz0/DuVUUiqR9XH\ns71TvD1alRTru7cfzo+kaEOy0nzv+I8b2NjopB9luoNodYeEt37IgZBlIpaFI560\nQTX0sAC7aCcAtfVKxEeQ5c/Ikw6FU5s+Fl+5ri/g0wKBgQCWM1DB6SXwj7RJFJjL\nUn55zz8+N9LP+YMp9myn1SfNfrSkz/z/i5abGKkxli39z6x7KcgbrjWLGp8mbd2r\nvBKrexRJc9aogxOraGIwDaE7isprzCWAIQ3yo+J/QgpogQ0QxjlCpWmbceKq9fP2\nyGQshMtuaco3pGUt0cGduqbYYw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "mateuscontadeservico@authenticationstudy-305213.iam.gserviceaccount.com",
+  "client_id": "105413487699417929559",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/mateuscontadeservico%40authenticationstudy-305213.iam.gserviceaccount.com"
+}

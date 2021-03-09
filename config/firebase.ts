@@ -1,5 +1,6 @@
 import firebase from 'firebase'
 import 'firebase/storage'
+import { Storage } from '@google-cloud/storage'
 
 const ISTEST = process.env.ISTEST
 

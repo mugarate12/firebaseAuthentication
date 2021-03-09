@@ -4,6 +4,8 @@ import Musics from './../../firebase/storage/musics'
 
 import styles from './Player.module.css'
 
+import api from './../../config/axios'
+
 interface PlayerInterface {
   urlData?: string
 }
@@ -20,11 +22,23 @@ export default function Player({ urlData }: PlayerInterface) {
 
   async function getOnStorage() {
     if (!!urlData) {
-      await musics.get(urlData)
-        .then(response => {
-          let audioElement = document.getElementById('audio')
+      // await musics.get(urlData)
+      //   .then(response => {
+      //     let audioElement = document.getElementById('audio')
   
-          audioElement['src'] = response.data.response['music']
+      //     audioElement['src'] = response.data.response['music']
+      //   })
+
+      await api.get(urlData, {
+        headers: {
+          'Access-Control-Allow-Origin': "*"
+        }
+      })
+        .then(response => {
+          console.log(response)
+        })
+        .catch(error => {
+          console.log(error)
         })
     }
   }
