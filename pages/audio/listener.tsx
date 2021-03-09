@@ -30,64 +30,23 @@ export default function Listener() {
     setMusicFile(file)
   }
 
-  async function sendSong() {
-    if (!!MusicFile) {
-      await musics.upload(MusicFile.name, MusicFile)
-        .then(snapshot => {
-          alert('música enviada')
-        })
-    }
+  async function sendMusic() {
+    await musics.upload(MusicFile)
+      .then(response => {
+        alert(response.data.sucess)
+      })
+      .catch(error => {
+        console.error(error)
+      })
   }
 
   async function listMusics() {
     await musics.index()
       .then(response => {
-        let playlistArray: Array<PlaylistInterface> = []
-
-        response.data.response['items'].forEach(music => {
-          playlistArray.push({
-            musicName: music.name,
-            storageReference: music.fullPath
-          })
-        })
-
-        setPlaylist(playlistArray)
+        setPlaylist(response.data.response['musics'])
       })
       .catch(error => {
-        console.log(error)
-      })
-  }
-
-  async function getMusic() {
-    const data = new FormData()
-    data.append('file', MusicFile)
-
-    await api.post('/api/music/upload', data)
-      .then(response => console.log(response))
-      .catch(error => console.error(error))
-  }
-
-  async function ListMusics() {
-    await database.collection('Musics')
-      .get()
-      .then(response => {
-        let playlistArray: Array<PlaylistInterface> = []
-        
-        response.forEach(doc => {
-          console.log(doc.data())
-          const data = doc.data()
-
-          playlistArray.push({
-            musicName: data.filename,
-            storageReference: data.path
-          })
-
-        })
-
-        setPlaylist(playlistArray)
-      })
-      .catch(error => {
-        console.log(error)
+        console.error(error)
       })
   }
 
@@ -111,30 +70,16 @@ export default function Listener() {
       />
       
       <button
-        onClick={() => sendSong()}
-      >
-        Send Song
-      </button>
-
-      <button
-        onClick={() => listMusics()}
-      >
-        List All Music
-      </button>
-      
-      <button
-        onClick={() => getMusic()}
+        onClick={() => sendMusic()}
       >
         send to google cloud storage
       </button>
 
       <button
-        onClick={() => ListMusics()}
+        onClick={() => listMusics()}
       >
         get musics referente in firestore
       </button>
-
-
 
       <p>Musics:</p>
 

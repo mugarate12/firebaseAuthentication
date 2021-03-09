@@ -1,5 +1,6 @@
 import {
-  storage
+  storage,
+  database
 } from './../../../config/firebase'
 
 import {
@@ -7,57 +8,16 @@ import {
   handleResponse
 } from './../../../config/firebaseResponse'
 
-import path from 'path'
-import { Storage } from '@google-cloud/storage'
-// // import './../../../authenticationstudy-a0ca37e7dc08.json'
+import api from './../../../config/axios'
 
-// const storageGoogleCloud = new Storage({
-//   projectId: 'fir-authenticationstudy',
-//   // keyFile: './../../../authenticationstudy-a0ca37e7dc08.json',
-//   keyFilename: path.join(__dirname, '..', '..', '..', './authenticationstudy-a0ca37e7dc08.json')
-// })
+interface MusicsListInterface {
+  musicName: string,
+  storageReference: string
+}
 
-// const bucketName = 'testdevelopment.xyz'
-// const bucket = storageGoogleCloud.bucket(bucketName)
+const COLLECTION_NAME = 'Musics'
 
 export default class Musics {
-  public upload = async (
-    filename: string,
-    musicFile: File
-  ) => {
-    try {
-      const filenameRef = storage.child(`/musics/${filename}`)
-
-      return filenameRef.put(musicFile)
-        .then(snapshot => {
-          return handleResponse({
-            message: 'music uploaded'
-          })
-        })
-    } catch (error) {
-      throw new FirebaseFunctionError(error.name, error.message)
-    }
-  }
-
-  public index = async () => {
-    try {
-      const listRef = storage.child('/musics')
-
-      return await listRef.listAll()
-        .then(response => {
-          return handleResponse({
-            message: 'list of musics',
-            data: {
-              prefixes: response.prefixes,
-              items: response.items
-            }
-          })
-        })
-    } catch (error) {
-      throw new FirebaseFunctionError(error.name, error.message)
-    }
-  }
-
   public get = async (
     urlData: string
   ) => {
@@ -77,17 +37,47 @@ export default class Musics {
     }
   }
 
-  public getCloudStorage = async () => {
-    // const storageGoogleCloud = new Storage({
-    //   projectId: 'fir-authenticationstudy',
-    //   // keyFile: './../../../authenticationstudy-a0ca37e7dc08.json',
-    //   keyFilename: path.join(__dirname, '..', '..', '..', './authenticationstudy-a0ca37e7dc08.json')
-    // })
-    
-    // const bucketName = 'testdevelopment.xyz'
-    // const bucket = storageGoogleCloud.bucket(bucketName)
-    // const file = bucket.file('prod.jpg')
+  public upload = async (
+    music: File
+  ) => {
+    const data = new FormData()
+    data.append('file', music)
 
-    // console.log(file)
+    return await api.post('/api/music/upload', data)
+      .then(response => {
+        return handleResponse({
+          message: 'upload sucessful!'
+        })
+      })
+      .catch(error => {
+        throw new FirebaseFunctionError(error.name, error.message)
+      })
+  }
+
+  public index = async () => {
+    return await database.collection(COLLECTION_NAME)
+      .get()
+      .then(snapshot => {
+        let musicsArray: Array<MusicsListInterface> = []
+
+        snapshot.forEach(doc => {
+          const data = doc.data()
+
+          musicsArray.push({
+            musicName: data.filename,
+            storageReference: data.path
+          })
+        })
+
+        return handleResponse({
+          message: 'get list of musics sucessful',
+          data: {
+            musics: musicsArray
+          }
+        })
+      })
+      .catch(error => {
+        throw new FirebaseFunctionError(error.name, error.message)
+      })
   }
 }
